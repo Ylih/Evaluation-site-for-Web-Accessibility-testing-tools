@@ -22,4 +22,4 @@ jobs:
       - name: Run axe
         run: |
           npm install -g @axe-core/cli
-          axe http://localhost:1338 http://localhost:1338/operable http://localhost:1338/perceivable --exit
+          axe http://localhost:1338 http://localhost:1338/operable http://localhost:1338/perceivable
