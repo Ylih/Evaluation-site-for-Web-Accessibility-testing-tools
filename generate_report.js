@@ -14,7 +14,10 @@ const path = process.argv[3];
 
 // Global variables
 const outputFilePath = "results/report.json";
+console.log(`report not yet loaded: ${path}`);
 const jsonData = require('./results/report.json');
+console.log("report loaded");
+
 
 // Function to append to the content of the current jsonData 
 function updateReport(updatedData) {
@@ -37,6 +40,7 @@ function createViolationObject(toolName,pageUrl) {
 }
 
 function generateAxeReport(filePath) {
+    console.log("results not yet loaded")
     const results = require(filePath);
     const urlPath = results[0].url;
     let summary = {
@@ -44,6 +48,8 @@ function generateAxeReport(filePath) {
         url: urlPath,
         fails: 0
     }
+
+    console.log("results loaded")
 
     if (results[0].violations.length > 0) {
         for (key in results[0].violations) {
