@@ -100,9 +100,9 @@ jobs:
   #         path: results/HTML_CodeSniffer/*
 
   report:
+    runs-on: ubuntu-latest
     if: ${{ success() }}
     needs: axe
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 18
@@ -114,9 +114,10 @@ jobs:
           mkdir -p results
           echo "{"summary": [], "report": []}" > results/report.json
       - name: Download axe results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Axe-core-perceivable
+          path: axe
       - name: Generate report
         run: |
           node generate_report.js axe ./Axe-core-perceivable/axe-results.json
