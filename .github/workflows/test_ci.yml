@@ -100,6 +100,8 @@ jobs:
   #         path: results/HTML_CodeSniffer/*
 
   report:
+    if: ${{ success() }}
+    needs: axe
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
