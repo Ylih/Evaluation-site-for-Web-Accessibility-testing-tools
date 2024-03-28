@@ -63,7 +63,7 @@ jobs:
       - name: Run accessibility-checker
         run: |
           npm install accessibility-checker
-          npx achecker $APP/${{ matrix.webpage }}
+          "npx achecker $APP/${{ matrix.webpage }}" > results/logs.txt
           ls results
       # - name: Archive accessibility-checker test results
       #   if: success() || failure()
