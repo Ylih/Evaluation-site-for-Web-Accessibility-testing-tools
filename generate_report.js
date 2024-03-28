@@ -38,7 +38,6 @@ function createViolationObject(toolName,pageUrl) {
 }
 
 function generateAxeReport(filePath) {
-    console.log("results not yet loaded")
     const results = require(filePath);
     const urlPath = results[0].url;
     let summary = {
@@ -46,8 +45,6 @@ function generateAxeReport(filePath) {
         url: urlPath,
         fails: 0
     }
-
-    console.log("results loaded")
 
     if (results[0].violations.length > 0) {
         for (key in results[0].violations) {

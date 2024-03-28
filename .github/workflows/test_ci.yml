@@ -38,7 +38,7 @@ jobs:
         run: |
           npm install -g @axe-core/cli
           CHROMEDRIVER_PATH=$(which chromedriver)
-          axe --chromedriver-path $CHROMEDRIVER_PATH $APP/${{ matrix.webpage }} --dir ./results/axe/ --save axe-results.json
+          axe --chromedriver-path $CHROMEDRIVER_PATH $APP/${{ matrix.webpage }} --dir ./results/axe/ --save axe-results-${{ matrix.webpage }}.json
       - name: Archive axe-core test results
         uses: actions/upload-artifact@v4
         with:
@@ -112,14 +112,15 @@ jobs:
       - name: Download axe results
         uses: actions/download-artifact@v4
         with:
-          name: Axe-core-perceivable
+          name: Axe-core-perceivable, Axe-core-operable, Axe-core-understandable
           path: axe
       - name: Generate report
         run: |
           mkdir -p results
           echo '{"summary": [], "report": []}' > results/report.json
-          ls axe
-          node generate_report.js axe ./axe/axe-results.json
+          node generate_report.js axe ./axe/axe-results-perceivable.json
+          node generate_report.js axe ./axe/axe-results-operable.json
+          node generate_report.js axe ./axe/axe-results-undertandable.json
           cat results/report.json
       # - name: Archive report
       #   uses: actions/upload-artifact@v4
