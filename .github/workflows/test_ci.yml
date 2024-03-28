@@ -118,8 +118,8 @@ jobs:
         run: |
           mkdir -p results
           echo '{"summary": [], "report": []}' > results/report.json
-          cat results/report.json
-          node generate_report.js axe ./axe-results.json
+          ls axe
+          node generate_report.js axe ./axe/axe-results.json
           cat results/report.json
       # - name: Archive report
       #   uses: actions/upload-artifact@v4

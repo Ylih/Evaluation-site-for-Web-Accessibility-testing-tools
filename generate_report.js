@@ -14,9 +14,7 @@ const path = process.argv[3];
 
 // Global variables
 const outputFilePath = "results/report.json";
-console.log(`report not yet loaded: ${path}`);
 const jsonData = require('./results/report.json');
-console.log("report loaded");
 
 
 // Function to append to the content of the current jsonData 
