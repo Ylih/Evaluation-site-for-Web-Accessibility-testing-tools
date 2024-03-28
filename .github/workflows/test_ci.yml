@@ -111,12 +111,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      - name: Download axe results
-        run: |
-          for page in $WEBPAGES; do
-            echo "Downloading artifact: Axe-core-$page"
-            actions/download-artifact@v4 --name "Axe-core-${page}" --path axe
-          done
+      - name: Download axe results (Perceivable)
+        uses: actions/download-artifact@v4
+        with:
+          name: Axe-core-perceivable
+          path: axe
+      - name: Download axe results (Operable)
+        uses: actions/download-artifact@v4
+        with:
+          name: Axe-core-operable
+          path: axe
+      - name: Download axe results (Understandable)
+        uses: actions/download-artifact@v4
+        with:
+          name: Axe-core-understandable
+          path: axe
       - name: Generate report
         run: |
           mkdir -p results
