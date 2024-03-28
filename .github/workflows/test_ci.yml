@@ -12,7 +12,7 @@ on:
 
 env:
   # Url for the running web app
-  APP: http://localhost:1338
+  APP: https://ylih.github.io/Evaluation-site-for-Web-Accessibility-testing-tools/
 
 jobs:
   # axe:
@@ -53,23 +53,24 @@ jobs:
         webpage: [perceivable, operable, understandable]
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm start & npx wait-on $APP
+      # - name: Use Node.js 18
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 18.x
+      # - run: npm ci
+      # - run: npm run build --if-present
+      # - run: npm start & npx wait-on $APP
       - name: Run accessibility-checker
         run: |
           npm install accessibility-checker
           npx achecker $APP/${{ matrix.webpage }}
-      - name: Archive accessibility-checker test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Accessibility-checker-${{ matrix.webpage }}
-          path: results/achecker/localhost_1338/${{ matrix.webpage }}.json
+          ls results
+      # - name: Archive accessibility-checker test results
+      #   if: success() || failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Accessibility-checker-${{ matrix.webpage }}
+      #     path: results/achecker/localhost_1338/${{ matrix.webpage }}.json
 
   # htmlcs:
   #   runs-on: ubuntu-latest
