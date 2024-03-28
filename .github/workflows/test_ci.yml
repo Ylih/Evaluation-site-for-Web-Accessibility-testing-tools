@@ -109,10 +109,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      - name: Create output JSON
-        run: |
-          mkdir -p results
-          echo "{"summary": [], "report": []}" > results/report.json
       - name: Download axe results
         uses: actions/download-artifact@v4
         with:
@@ -120,6 +116,8 @@ jobs:
           path: axe
       - name: Generate report
         run: |
+          mkdir -p results
+          echo "{"summary": [], "report": []}" > results/report.json
           node generate_report.js axe ./Axe-core-perceivable/axe-results.json
       - name: Archive report
         uses: actions/upload-artifact@v4
