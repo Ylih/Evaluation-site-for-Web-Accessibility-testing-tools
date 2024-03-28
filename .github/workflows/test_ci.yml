@@ -103,34 +103,28 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ success() }}
     needs: axe
+    env:
+      WEBPAGES: "perceivable operable understandable"
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      - name: Download axe results (Perceivable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Axe-core-perceivable
-          path: axe
-      - name: Download axe results (Operable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Axe-core-operable
-          path: axe
-      - name: Download axe results (Understandable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Axe-core-understandable
-          path: axe
+      - name: Download axe results
+        run: |
+          for page in $WEBPAGES; do
+            echo "Downloading artifact: Axe-core-$page"
+            actions/download-artifact@v4 --name "Axe-core-$page" --path axe
+          done
       - name: Generate report
         run: |
           mkdir -p results
           echo '{"summary": [], "report": []}' > results/report.json
-          node generate_report.js axe ./axe/axe-results-perceivable.json
-          node generate_report.js axe ./axe/axe-results-operable.json
-          node generate_report.js axe ./axe/axe-results-undertandable.json
+          for page in $WEBPAGES; do
+            echo "Generating report for $page"
+            node generate_report.js "axe" "./axe/axe-results-${page}.json"
+          done
           cat results/report.json
       # - name: Archive report
       #   uses: actions/upload-artifact@v4
