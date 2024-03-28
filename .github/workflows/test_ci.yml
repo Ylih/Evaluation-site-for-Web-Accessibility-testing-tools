@@ -99,64 +99,64 @@ jobs:
   #         name: HTML_CodeSniffer-${{ matrix.webpage }}
   #         path: results/HTML_CodeSniffer/*
 
-  report:
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: achecker
-    # needs: axe
-    env:
-      WEBPAGES: "perceivable operable understandable"
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 21.x
-      # - name: Download axe results (Perceivable)
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: Axe-core-perceivable
-      #     path: axe
-      # - name: Download axe results (Operable)
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: Axe-core-operable
-      #     path: axe
-      # - name: Download axe results (Understandable)
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: Axe-core-understandable
-      #     path: axe
-      - name: Download achecker results (Perceivable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Accessibility-checker-perceivable
-          path: achecker
-      - name: Download achecker results (Operable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Accessibility-checker-operable
-          path: achecker
-      - name: Download achecker results (Understandable)
-        uses: actions/download-artifact@v4
-        with:
-          name: Accessibility-checker-understandable
-          path: achecker
-      - name: Generate report
-        run: |
-          mkdir -p results
-          echo '{"summary": [], "report": []}' > results/report.json
-          for page in $WEBPAGES; do
-            echo "Generating report for $page"
-            node generate_report.js "achecker" "./achecker/${page}.json"
-          done
-          cat results/report.json
-      # for page in $WEBPAGES; do
-      #   echo "Generating report for $page"
-      #   node generate_report.js "axe" "./axe/axe-results-${page}.json"
-      # done
-      # - name: Archive report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: Report
-      #     path: results/report.json
+  # report:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ always() }}
+  #   needs: achecker
+  #   # needs: axe
+  #   env:
+  #     WEBPAGES: "perceivable operable understandable"
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Use Node.js 18
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 21.x
+  #     # - name: Download axe results (Perceivable)
+  #     #   uses: actions/download-artifact@v4
+  #     #   with:
+  #     #     name: Axe-core-perceivable
+  #     #     path: axe
+  #     # - name: Download axe results (Operable)
+  #     #   uses: actions/download-artifact@v4
+  #     #   with:
+  #     #     name: Axe-core-operable
+  #     #     path: axe
+  #     # - name: Download axe results (Understandable)
+  #     #   uses: actions/download-artifact@v4
+  #     #   with:
+  #     #     name: Axe-core-understandable
+  #     #     path: axe
+  #     - name: Download achecker results (Perceivable)
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Accessibility-checker-perceivable
+  #         path: achecker
+  #     - name: Download achecker results (Operable)
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Accessibility-checker-operable
+  #         path: achecker
+  #     - name: Download achecker results (Understandable)
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Accessibility-checker-understandable
+  #         path: achecker
+  #     - name: Generate report
+  #       run: |
+  #         mkdir -p results
+  #         echo '{"summary": [], "report": []}' > results/report.json
+  #         for page in $WEBPAGES; do
+  #           echo "Generating report for $page"
+  #           node generate_report.js "achecker" "./achecker/${page}.json"
+  #         done
+  #         cat results/report.json
+  #     # for page in $WEBPAGES; do
+  #     #   echo "Generating report for $page"
+  #     #   node generate_report.js "axe" "./axe/axe-results-${page}.json"
+  #     # done
+  #     # - name: Archive report
+  #     #   uses: actions/upload-artifact@v4
+  #     #   with:
+  #     #     name: Report
+  #     #     path: results/report.json
