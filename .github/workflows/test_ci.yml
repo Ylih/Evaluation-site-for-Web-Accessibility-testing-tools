@@ -109,10 +109,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      - name: Download axe results
+      - name: Download axe results (Perceivable)
         uses: actions/download-artifact@v4
         with:
-          name: Axe-core-perceivable, Axe-core-operable, Axe-core-understandable
+          name: Axe-core-perceivable
+          path: axe
+      - name: Download axe results (Operable)
+        uses: actions/download-artifact@v4
+        with:
+          name: Axe-core-operable
+          path: axe
+      - name: Download axe results (Understandable)
+        uses: actions/download-artifact@v4
+        with:
+          name: Axe-core-understandable
           path: axe
       - name: Generate report
         run: |
