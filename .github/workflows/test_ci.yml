@@ -111,6 +111,7 @@ jobs:
           node-version: 21.x
       - name: Create output JSON
         run: |
+          mkdir -p results
           echo "{"summary": [], "report": []}" > results/report.json
       - name: Download axe results
         uses: actions/download-artifact@v3
